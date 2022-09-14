@@ -34,4 +34,90 @@ h1, h2 {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    font-size: xx-large;
+}
+section{
+    display: flex;
+    width: 100%;
+    min-width: 350px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 4em;
+}
+
+#cart{
+    height: auto;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0px auto;
+}
+
+#cart #cartContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#cart #cartContainer h2{
+    width: 100%;
+    text-align:center;
+    font-family: 'Poppins',sans-serif;
+    margin-bottom: 1em;
+}
+
+#cart #cartContainer .cart-item{
+    background-color: rgba(204, 204, 204, 0.615);
+    width: 100%;
+    margin: 5px 0px;
+    display: flex;
+    justify-content: space-between;
+    font-family: Helvetica, sans-serif;
+    padding: 1em;
+}
+#cart #cartContainer .cart-item h4{
+    width: 250px;
+    text-align:center;
+    text-align: left;
+}
+
+.card{
+    width: 210px;
+    height: auto;
+    margin: 15px;
+    padding: 0.7em;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+    background-color: #fff;
+    font-family: 'Poppins',sans-serif;
+}
+.card h3{
+    margin: 0.5em 0em;
+}
+.card h4{
+    font-size: 0.875em;
+    margin: 0.5em 0em;
+    color: #888;
+    font-weight: normal;
+}
+
+.card .button{
+    width: 100%;
+    border: none;
+    padding: 0.7em;
+    background-color: #695CFE;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Poppins',sans-serif;
+    margin: 0.5em 0em;
+}
+
+.card:hover{
+    transform: translateY(-10px);
+    box-shadow: 1.25px 1.25px 10px rgba(0,0,0,0.5);
+}
+
+.card img{
+    width: 100%;
 }
