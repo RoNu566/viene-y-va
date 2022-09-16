@@ -164,3 +164,9 @@ const loadClothes = (Clothes) => {
 }
 loadClothes(Clothes);
 
+const botonagregar = document.querySelector("#agregarprenda");
+
+botonagregar.addEventListener("click", ()=>{
+    agregarprenda()
+})
+
