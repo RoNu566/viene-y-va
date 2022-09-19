@@ -121,3 +121,7 @@ section{
 .card img{
     width: 100%;
 }
+
+.botonscale {
+    transform: scale (1.2);
+}

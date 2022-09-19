@@ -17,16 +17,16 @@ const Clothes = [
         name: "remera",
         size: "XL",
         colour: "rojo",
-        price: "500",
-        image: "red-t-shirt.jpg",
+        price: "$500",
+        image: "img/red-t-shirt.jpg",
     },
     {
         id: 2,
         name: "remera",
         size: "L",
         colour: "verde",
-        price: "400",
-        image: "green-t-shirt.jpg",
+        price: "$400",
+        image: "img/green-t-shirt.jpg",
 
     },
     {
@@ -34,8 +34,8 @@ const Clothes = [
         name: "camisa",
         size: "XL",
         colour: "celeste",
-        price: "800",
-        image: "blue-shirt.jpg",
+        price: "$800",
+        image: "img/blue-shirt.jpg",
 
     },
     {
@@ -43,8 +43,8 @@ const Clothes = [
         name: "blusa",
         size: "S",
         colour: "rosado",
-        price: "800",
-        image: "pinkblouse.jpg",
+        price: "$800",
+        image: "img/pinkblouse.jpg",
 
     },
     {
@@ -52,8 +52,8 @@ const Clothes = [
         name: "shorts",
         size: "XS",
         colour: "violeta",
-        price: "1200",
-        image: "purple-shorts.jpg",
+        price: "$1200",
+        image: "img/purple-shorts.jpg",
 
     },
 
@@ -82,12 +82,12 @@ const updateCart = (cart) => {
     let div = document.createElement('div');
     div.setAttribute('id', 'cartContainer');
     div.innerHTML += ` <h2>Carrito de compras</h2>`;
-    for (const Clothes of cart) {
+    for (const clothes of cart) {
         div.innerHTML += `
 <div class="cart-item">
-                  <h4>Producto: ${Clothes.name}</h4>
-                 <h4>Precio por unidad: ${Clothes.price}</h4>
-                 <h4>Cantidad: ${Clothes.quantity}</h4>
+                 <h4>Producto: ${clothes.name}</h4>
+                 <h4>Precio por unidad: ${clothes.price}</h4>
+                 <h4>Cantidad: ${clothes.quantity}</h4>
              </div>
 
                       `;
@@ -103,7 +103,7 @@ const loadEvents = () => {
     for (const button of buttons) {
         button.addEventListener('click', () => {
 
-            let found = cart.find(clothes => clothes.id == button.id);
+            let found = cart.find(element => element.id == button.id);
             if (found) {
 
                 found.quantity++;
@@ -113,9 +113,10 @@ const loadEvents = () => {
                 if (clothes) {
                     let newClothes = {
                         id: clothes.id,
+                        name: clothes.name,
                         size: clothes.size,
                         colour: clothes.colour,
-                        price: clothes.price,
+                        price: "$" + clothes.price,
                         image: clothes.image,
                         quantity: 1
                     }
@@ -133,8 +134,8 @@ function agregarprenda() {
     let nombrenuevaprenda = (prompt("ingrese una prenda nueva"));
     let tallenuevo = (prompt("ingrese el talle en letras, ej: S, M, L"));
     let colornuevo = (prompt("ingrese el color de la prenda"));
-    let precionuevo = Number(prompt("ingrese el precio"));
-    let image = "non-available.jpg"
+    let precionuevo = "$" + Number(prompt("ingrese el precio"));
+    let image = "img/non-available.jpg"
     let newprenda = new Prenda(idnuevo, nombrenuevaprenda, tallenuevo, colornuevo, precionuevo, image)
     console.log(newprenda)
     Clothes.push(newprenda)
@@ -160,13 +161,14 @@ const loadClothes = (Clothes) => {
         `;
         container.appendChild(div);
     }
-
+    loadEvents();
 }
-loadClothes(Clothes);
+
+
+document.addEventListener("DOMContentLoaded", loadClothes(Clothes));
 
 const botonagregar = document.querySelector("#agregarprenda");
 
 botonagregar.addEventListener("click", ()=>{
     agregarprenda()
 })
-
