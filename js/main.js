@@ -13,102 +13,39 @@ class Prenda {
 
 }
 //Constante de cada prenda
-const Clothes = [
-    {
-        id: 1,
-        name: "remera",
-        size: "XL",
-        colour: "rojo",
-        price: 500,
-        image: "img/red-t-shirt.jpg",
-    },
-    {
-        id: 2,
-        name: "remera",
-        size: "L",
-        colour: "verde",
-        price: 400,
-        image: "img/green-t-shirt.jpg",
-
-    },
-    {
-        id: 3,
-        name: "camisa",
-        size: "XL",
-        colour: "celeste",
-        price: 800,
-        image: "img/blue-shirt.jpg",
-
-    },
-    {
-        id: 4,
-        name: "blusa",
-        size: "S",
-        colour: "rosado",
-        price: 800,
-        image: "img/pinkblouse.jpg",
-
-    },
-    {
-        id: 5,
-        name: "shorts",
-        size: "XS",
-        colour: "violeta",
-        price: 1200,
-        image: "img/purple-shorts.jpg",
-
-    },
-    {
-        id: 6,
-        name: "pantalon",
-        size: "M",
-        colour: "marron",
-        price: 2500,
-        image: "img/brown-trousers.jpg",
-
-    },
-    {
-        id: 7,
-        name: "campera",
-        size: "XXL",
-        colour: "negra",
-        price: 3000,
-        image: "img/black-jacket.jpg",
-
-    },
-    {
-        id: 8,
-        name: "tapado",
-        size: "M",
-        colour: "gris",
-        price: 3500,
-        image: "img/grey-coat.jpg",
-
-    },
-    {
-        id: 9,
-        name: "Calza",
-        size: "L",
-        colour: "amarillo",
-        price: 1500,
-        image: "img/yellow-leggins.jpg",
-
-    },
-    {
-        id: 10,
-        name: "vestido",
-        size: "S",
-        colour: "rojo",
-        price: 5000,
-        image: "img/red-dress.jpg",
-
-    },
-
-
-]
+const Clothes = [{id: 1, name: "remera", size: "XL", colour: "rojo", price: 500, image: "img/red-t-shirt.jpg" },
+                 {id: 2, name: "remera", size: "L", colour: "verde", price: 400, image: "img/green-t-shirt.jpg" },
+                 {id: 3, name: "camisa", size: "XL", colour: "celeste", price: 800, image: "img/blue-shirt.jpg" },
+                 {id: 4, name: "blusa", size: "S", colour: "rosado", price: 800, image: "img/pinkblouse.jpg" },
+                 {id: 5, name: "shorts", size: "XS", colour: "violeta", price: 1200, image: "img/purple-shorts.jpg" },
+                 {id: 6, name: "pantalon", size: "M", colour: "marron", price: 2500, image: "img/brown-trousers.jpg" },
+                 {id: 7, name: "campera", size: "XXL", colour: "negro", price: 3000, image: "img/black-jacket.jpg" },
+                 {id: 8, name: "tapado", size: "M", colour: "gris", price: 3500, image: "img/grey-coat.jpg" },
+                 {id: 9, name: "calza", size: "L", colour: "amarillo", price: 1500, image: "img/yellow-leggins.jpg" },
+                 {id: 10, name: "vestido", size: "S", colour: "rojo", price: 5000, image: "img/red-dress.jpg" },]
 
 //Carrito!!
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+//ESTO NO ME SALIO =(
+// const cartHtml = (param) => {
+//     return ` 
+   
+//     div.innerHTML += ` <h2>Carrito de compras</h2>` ;
+//      for (const clothes of cart) {
+//       div.innerHTML += 
+  
+//     <div class="cart-item">
+//         <h4>producto:${param.name}</h4>
+//         <h4>precio por unidad: $$ {param.price}</h4>
+//         <h4>cantidad:${param.quantity}</h4>
+//         <button onclick= "eliminarDelCarrito(${param.id})" class = "btnBorrar">❌</button>
+//         </div>
+//         `
+// }
+// const updateCart2 = (cart)=>{
+//     container.innerHTML=cart.map(clothes =>cartHtml(clothes).join(""))
+// }
 
 const updateCart = (cart) => {
     let cartContainer = document.querySelector('#cart');
@@ -127,9 +64,7 @@ const updateCart = (cart) => {
                  <h4>Precio por unidad: $${clothes.price}</h4>
                  <h4>Cantidad: ${clothes.quantity}</h4>
                  <button onclick = "eliminarDelCarrito(${clothes.id})" class="btnBorrar">❌</button>
-             </div>
-
-                      `;
+             </div> `;
     }
 
     cartContainer.appendChild(div);
@@ -141,6 +76,8 @@ const inputFiltrar = document.querySelector("#filtroProducto")
 function filtrarClothes() {
     inputFiltrar.value = inputFiltrar.value.trim().toUpperCase()
     debugger
+   if (inputFiltrar.value !== "") {
+        const resultado = Clothes.filter(Clothes => Clothes.size.includes(inputFiltrar.value))
     if (inputFiltrar.value !== "") {
         const resultado = Clothes.filter(Clothes => Clothes.size.includes(inputFiltrar.value))
         if (resultado.length === 0) {
@@ -153,7 +90,7 @@ function filtrarClothes() {
         loadClothes(Clothes)
     }
 }
-
+}
 inputFiltrar.addEventListener("input", filtrarClothes)
 
 function eventoEnBotones() {
@@ -190,7 +127,7 @@ const loadEvents = () => {
                     cart.push(newClothes);
                 }
             }
-
+            localStorage.setItem("cart", JSON.stringify(cart));
             updateCart(cart);
         })
     }
@@ -202,16 +139,19 @@ const loadEvents = () => {
 
 function agregarprenda() {
     let idnuevo = (Clothes.length + 1);
-    let nombrenuevaprenda = (prompt("ingrese una prenda nueva"));
-    let tallenuevo = (prompt("ingrese el talle en letras, ej: S, M, L"));
-    let colornuevo = (prompt("ingrese el color de la prenda"));
-    let precionuevo = Number(prompt("ingrese el precio"));
-    let image = "img/non-available.jpg"
-    let newprenda = new Prenda(idnuevo, nombrenuevaprenda, tallenuevo, colornuevo, precionuevo, image)
-    console.log(newprenda)
-    Clothes.push(newprenda)
-    console.log(Clothes)
-
+    let confimacion = confirm("¿Desea agregar una nueva prenda para vender?");
+    if (confimacion){
+        let nombrenuevaprenda = (prompt("ingrese una prenda nueva"));
+        let tallenuevo = (prompt("ingrese el talle en letras, ej: S, M, L"));
+        let colornuevo = (prompt("ingrese el color de la prenda"));
+        let precionuevo = Number(prompt("ingrese el precio"));
+        let image = "img/non-available.jpg"
+        let newprenda = new Prenda(idnuevo, nombrenuevaprenda, tallenuevo, colornuevo, precionuevo, image)
+        console.log(newprenda)
+        Clothes.push(newprenda)
+        console.log(Clothes)
+        }
+    
     loadClothes(Clothes)
 }
 
@@ -247,13 +187,14 @@ botonagregar.addEventListener("click", () => {
     localStorage.setItem("cart", JSON.stringify(cart))
 })
 function recuperarCarrito() {
-         if (localStorage.getItem("cart")) {
-            cart = JSON.parse(localStorage.getItem("cart"))
-        }
+    if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"))
+        updateCart(cart)
     }
-    recuperarCarrito()
+}
+recuperarCarrito()
 
-    // eliminar del carrito de a una prenda
+// eliminar del carrito de a una prenda
 
 const eliminarDelCarrito = (clothesid) => {
     const item = cart.find((clothes) => clothes.id === clothesid)
@@ -265,8 +206,8 @@ const eliminarDelCarrito = (clothesid) => {
 
 const botonpagar = document.querySelector("#btnpagar");
 botonpagar.addEventListener("click", pagar);
-function pagar(){
-    const stotal = cart.reduce ((acc, el) => acc + el.price*el.quantity, 0);
+function pagar() {
+    const stotal = cart.reduce((acc, el) => acc + el.price * el.quantity, 0);
     console.log(stotal);
-    alert("Se debitaron" + " "+ stotal+" "+"de su cuenta")
+    alert("Se debitaron" + " " + stotal + " " + "de su cuenta")
 }
