@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Permanent+Marker&family=Raleway&display=swap"
         rel="stylesheet">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body id="contacto">
@@ -27,9 +28,13 @@
             <input type="email" id="inputEmail" placeholder="Correo electrónico"><br>
             <label for="comentarios">Comentarios</label><br>
             <textarea id="inputComentarios" cols="50" rows="10"></textarea><br>
-            <input type="reset" value="Reiniciar formulario">
-            <button id="btnEnviar">ENVIAR</button>
+            <button type="reset">Reiniciar formulario</button>
         </form>
+        <div class="divformulario">
+        <button type="submit" id="btnEnviar">ENVIAR</button>
+        </div>
+
+
     </article>
     <hr>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

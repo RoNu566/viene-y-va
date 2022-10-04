@@ -7,6 +7,13 @@ function guardarDatos() {
     localStorage.setItem("nombre",inputNombre.value) 
     localStorage.setItem("email",inputEmail.value)
     localStorage.setItem("comentarios",inputComentarios.value)
+    swal({
+        icon: 'success',
+        title: "Gracias por tu comentario ✍️",
+        text: "Nos pondremos en contato contigo a la brevedad!",
+        showConfirmButton: false,
+        timer: 4000,
+      });
 }
 
 btnEnviar.addEventListener("click",guardarDatos)

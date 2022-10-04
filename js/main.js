@@ -2,15 +2,8 @@
 //Sin este constructor no añade prenda nueva
 class Prenda {
     constructor(id, name, size, colour, price, image, quantity) {
-        this.id = id
-        this.name = name
-        this.size = size
-        this.colour = colour
-        this.price = price
-        this.image = image
-        this.quantity = quantity
+       this.id=id,this.name=name,this.size=size,this.colour=colour,this.price=price,this.image=image,this.quantity=quantity;
     }
-
 }
 //Constante de cada prenda
 const Clothes = [{id: 1, name: "remera", size: "XL", colour: "rojo", price: 500, image: "img/red-t-shirt.jpg" },
@@ -18,35 +11,14 @@ const Clothes = [{id: 1, name: "remera", size: "XL", colour: "rojo", price: 500,
                  {id: 3, name: "camisa", size: "XL", colour: "celeste", price: 800, image: "img/blue-shirt.jpg" },
                  {id: 4, name: "blusa", size: "S", colour: "rosado", price: 800, image: "img/pinkblouse.jpg" },
                  {id: 5, name: "shorts", size: "XS", colour: "violeta", price: 1200, image: "img/purple-shorts.jpg" },
-                 {id: 6, name: "pantalon", size: "M", colour: "marron", price: 2500, image: "img/brown-trousers.jpg" },
+                 {id: 6, name: "pantalon", size: "M", colour: "marron", price: 1500, image: "img/brown-trousers.jpg" },
                  {id: 7, name: "campera", size: "XXL", colour: "negro", price: 3000, image: "img/black-jacket.jpg" },
                  {id: 8, name: "tapado", size: "M", colour: "gris", price: 3500, image: "img/grey-coat.jpg" },
-                 {id: 9, name: "calza", size: "L", colour: "amarillo", price: 1500, image: "img/yellow-leggins.jpg" },
+                 {id: 9, name: "calza", size: "L", colour: "amarillo", price: 2000, image: "img/yellow-leggins.jpg" },
                  {id: 10, name: "vestido", size: "S", colour: "rojo", price: 5000, image: "img/red-dress.jpg" },]
 
 //Carrito!!
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-//ESTO NO ME SALIO =(
-// const cartHtml = (param) => {
-//     return ` 
-   
-//     div.innerHTML += ` <h2>Carrito de compras</h2>` ;
-//      for (const clothes of cart) {
-//       div.innerHTML += 
-  
-//     <div class="cart-item">
-//         <h4>producto:${param.name}</h4>
-//         <h4>precio por unidad: $$ {param.price}</h4>
-//         <h4>cantidad:${param.quantity}</h4>
-//         <button onclick= "eliminarDelCarrito(${param.id})" class = "btnBorrar">❌</button>
-//         </div>
-//         `
-// }
-// const updateCart2 = (cart)=>{
-//     container.innerHTML=cart.map(clothes =>cartHtml(clothes).join(""))
-// }
-
 const updateCart = (cart) => {
     let cartContainer = document.querySelector('#cart');
 
@@ -81,7 +53,9 @@ function filtrarClothes() {
     if (inputFiltrar.value !== "") {
         const resultado = Clothes.filter(Clothes => Clothes.size.includes(inputFiltrar.value))
         if (resultado.length === 0) {
-            alert("No hay prendas del talle que buscas")
+            swal("No hay prendas del talle que buscas 😞", "Pero puedes agregar productos que tengas para vender 😁");
+
+            // alert("No hay prendas del talle que buscas")
             loadClothes(Clothes)
         } else {
             loadClothes(resultado)
@@ -134,14 +108,15 @@ const loadEvents = () => {
 }
 
 
-
 // AGREGAR PRENDA PARA VENDER- preguntas para agregar prenda
 
 function agregarprenda() {
+
     let idnuevo = (Clothes.length + 1);
-    let confimacion = confirm("¿Desea agregar una nueva prenda para vender?");
+    let confimacion = confirm("¿Desea agregar una nueva prenda para vender?")
     if (confimacion){
         let nombrenuevaprenda = (prompt("ingrese una prenda nueva"));
+                 
         let tallenuevo = (prompt("ingrese el talle en letras, ej: S, M, L"));
         let colornuevo = (prompt("ingrese el color de la prenda"));
         let precionuevo = Number(prompt("ingrese el precio"));
@@ -203,11 +178,17 @@ const eliminarDelCarrito = (clothesid) => {
     updateCart(cart)
     localStorage.setItem("cart", JSON.stringify(cart))
 }
-
+//BOTON PAGAR EL TOTAL DE LA COMPRA
 const botonpagar = document.querySelector("#btnpagar");
 botonpagar.addEventListener("click", pagar);
 function pagar() {
     const stotal = cart.reduce((acc, el) => acc + el.price * el.quantity, 0);
     console.log(stotal);
-    alert("Se debitaron" + " " + stotal + " " + "de su cuenta")
+    swal({
+        icon: 'success',
+        title: "Gracias por su compra!",
+        text: "Se debitaron" + " " +"$"+ stotal + " " + "de su cuenta",
+        showConfirmButton: false,
+        timer: 4000,
+      });
 }

@@ -46,3 +46,10 @@ article p {
     align-items: center;
     justify-content: center;
 }
+
+.divformulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
