@@ -1,21 +1,53 @@
-
-//Sin este constructor no añade prenda nueva
+// Sin este constructor no añade prenda nueva
 class Prenda {
     constructor(id, name, size, colour, price, image, quantity) {
        this.id=id,this.name=name,this.size=size,this.colour=colour,this.price=price,this.image=image,this.quantity=quantity;
     }
 }
+const contenedor = document.querySelector(".container")
+const URL = "../json/products.json"
+let Clothes = JSON.parse(localStorage.getItem("Clothes")) || [];
+
+const cargarContenido  = async ()=> {
+    Clothes = []
+    try {
+        const response = await fetch (URL)
+        const data = await response.json()
+        Clothes.push(...data);
+        loadClothes(Clothes);
+
+    } 
+    catch (error) {
+        console.log(error)
+        alert("no se pueden cargar los datos")
+    }
+    finally {
+        localStorage.setItem("Clothes", JSON.stringify(Clothes))
+    }
+}
+
+document.addEventListener("DOMContentLoaded",cargarContenido);
 //Constante de cada prenda
-const Clothes = [{id: 1, name: "remera", size: "XL", colour: "rojo", price: 500, image: "img/red-t-shirt.jpg" },
-                 {id: 2, name: "remera", size: "L", colour: "verde", price: 400, image: "img/green-t-shirt.jpg" },
-                 {id: 3, name: "camisa", size: "XL", colour: "celeste", price: 800, image: "img/blue-shirt.jpg" },
-                 {id: 4, name: "blusa", size: "S", colour: "rosado", price: 800, image: "img/pinkblouse.jpg" },
-                 {id: 5, name: "shorts", size: "XS", colour: "violeta", price: 1200, image: "img/purple-shorts.jpg" },
-                 {id: 6, name: "pantalon", size: "M", colour: "marron", price: 1500, image: "img/brown-trousers.jpg" },
-                 {id: 7, name: "campera", size: "XXL", colour: "negro", price: 3000, image: "img/black-jacket.jpg" },
-                 {id: 8, name: "tapado", size: "M", colour: "gris", price: 3500, image: "img/grey-coat.jpg" },
-                 {id: 9, name: "calza", size: "L", colour: "amarillo", price: 2000, image: "img/yellow-leggins.jpg" },
-                 {id: 10, name: "vestido", size: "S", colour: "rojo", price: 5000, image: "img/red-dress.jpg" },]
+// const Clothes = [{id: 1, name: "remera", size: "XL", colour: "rojo", price: 500, image: "img/red-t-shirt.jpg" },
+//                  {id: 2, name: "remera", size: "L", colour: "verde", price: 400, image: "img/green-t-shirt.jpg" },
+//                  {id: 3, name: "camisa", size: "XL", colour: "celeste", price: 800, image: "img/blue-shirt.jpg" },
+//                  {id: 4, name: "blusa", size: "S", colour: "rosado", price: 800, image: "img/pinkblouse.jpg" },
+//                  {id: 5, name: "shorts", size: "XS", colour: "violeta", price: 1200, image: "img/purple-shorts.jpg" },
+//                  {id: 6, name: "pantalon", size: "M", colour: "marron", price: 1500, image: "img/brown-trousers.jpg" },
+//                  {id: 7, name: "campera", size: "XXL", colour: "negro", price: 3000, image: "img/black-jacket.jpg" },
+//                  {id: 8, name: "tapado", size: "M", colour: "gris", price: 3500, image: "img/grey-coat.jpg" },
+//                  {id: 9, name: "calza", size: "L", colour: "amarillo", price: 2000, image: "img/yellow-leggins.jpg" },
+//                  {id: 10, name: "vestido", size: "S", colour: "rojo", price: 5000, image: "img/red-dress.jpg" },
+//                  {id: 11, name: "saco", size: "M", colour: "azul", price: 3500, image: "img/blue-blazer.jpg"},
+//                  {id: 12, name: "gorra", size: "-", colour: "negro", price: 500, image: "img/black-cup.jpg"},
+//                  {id: 13, name: "pollera", size: "XXS", colour: "negro", price: 1500, image: "img/black-skirt.jpg"},
+//                  {id: 14, name: "cartera", size: "-", colour: "rosa claro", price: 2500, image: "img/pink-bag.jpg"},
+//                  {id: 15, name: "buzo corto", size: "L", colour: "rosa, blanco y negro", price: 1600, image: "img/crop-top.jpg"},
+//                  {id: 16, name: "pantalon jean", size: "S", colour: "azul", price: 1800, image: "img/jeans.jpg"},
+//                  {id: 17, name: "buzo", size: "XXL", colour: "turquesa", price: 1000, image: "img/buzo.jpg"},
+//                  {id: 18, name: "vestido", size: "XL", colour: "azul con lunares", price: 1400, image: "img/blue-dress.jpg"},
+//                  {id: 19, name: "monoprenda", size: "M", colour: "camel", price: 1700, image: "img/mono.jpg"},
+//                  {id: 20, name: "pollera", size: "S", colour: "naranja", price: 1200, image: "img/orange-skirt.jpg"},]
 
 //Carrito!!
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
