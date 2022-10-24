@@ -5,7 +5,7 @@
 }
 
 .body {
-    background-image: url("../img/flowers.jpg");
+    background-image: url("../img/fondo.png");
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
@@ -194,4 +194,54 @@ button a {
     padding: 0.7em;
     font-family: 'Permanent Marker', cursive;
     margin: 0.5em 0em;
+}
+
+/*-----Agregar productos ----*/
+
+#login_user{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(20, 62, 189, 0.6);
+    border-radius: 1rem;
+    margin: 2% 1% 2% 1%;
+    padding: 2%;
+}
+#login_user input, label{
+    margin: 1%;
+    padding: 1%;
+    width: 300px;
+}
+#login_user button{
+    margin-top: 4%;
+    padding: 2%;
+}
+
+
+#formuilario_addproduct{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(20, 62, 189, 0.6);
+    border-radius: 1rem;
+    margin: 2% 1% 2% 1%;
+    padding: 2%;
+}
+#formuilario_addproduct select, input{
+    width: 300px;
+}
+
+#formuilario_addproduct button{
+    margin: 2% 0% 2% 0%;
+    padding: 2%;
+}
+
+#contacto_btn{
+    margin-top: 5%;
+}
+
+.ocultar{
+    display: none !important;
 }

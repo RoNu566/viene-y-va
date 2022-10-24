@@ -6,15 +6,16 @@ class Prenda {
 }
 const contenedor = document.querySelector(".container")
 const URL = "../json/products.json"
-let Clothes = JSON.parse(localStorage.getItem("Clothes")) || [];
+let Clothes_iniciales = JSON.parse(localStorage.getItem("Clothes_iniciales")) || [];
+let Clothes_agregadas = JSON.parse(localStorage.getItem("Clothes_agregadas")) || [];
+let Clothes = [...Clothes_iniciales, ...Clothes_agregadas] || [];
 
 const cargarContenido  = async ()=> {
-    Clothes = []
+    Clothes_iniciales = [];
     try {
         const response = await fetch (URL)
         const data = await response.json()
-        Clothes.push(...data);
-        loadClothes(Clothes);
+        Clothes_iniciales.push(...data);
 
     } 
     catch (error) {
@@ -22,32 +23,13 @@ const cargarContenido  = async ()=> {
         alert("no se pueden cargar los datos")
     }
     finally {
-        localStorage.setItem("Clothes", JSON.stringify(Clothes))
+        localStorage.setItem("Clothes_iniciales", JSON.stringify(Clothes_iniciales));
+        Clothes = [...Clothes_iniciales, ...Clothes_agregadas]
+        loadClothes(Clothes)
     }
 }
 
 document.addEventListener("DOMContentLoaded",cargarContenido);
-//Constante de cada prenda
-// const Clothes = [{id: 1, name: "remera", size: "XL", colour: "rojo", price: 500, image: "img/red-t-shirt.jpg" },
-//                  {id: 2, name: "remera", size: "L", colour: "verde", price: 400, image: "img/green-t-shirt.jpg" },
-//                  {id: 3, name: "camisa", size: "XL", colour: "celeste", price: 800, image: "img/blue-shirt.jpg" },
-//                  {id: 4, name: "blusa", size: "S", colour: "rosado", price: 800, image: "img/pinkblouse.jpg" },
-//                  {id: 5, name: "shorts", size: "XS", colour: "violeta", price: 1200, image: "img/purple-shorts.jpg" },
-//                  {id: 6, name: "pantalon", size: "M", colour: "marron", price: 1500, image: "img/brown-trousers.jpg" },
-//                  {id: 7, name: "campera", size: "XXL", colour: "negro", price: 3000, image: "img/black-jacket.jpg" },
-//                  {id: 8, name: "tapado", size: "M", colour: "gris", price: 3500, image: "img/grey-coat.jpg" },
-//                  {id: 9, name: "calza", size: "L", colour: "amarillo", price: 2000, image: "img/yellow-leggins.jpg" },
-//                  {id: 10, name: "vestido", size: "S", colour: "rojo", price: 5000, image: "img/red-dress.jpg" },
-//                  {id: 11, name: "saco", size: "M", colour: "azul", price: 3500, image: "img/blue-blazer.jpg"},
-//                  {id: 12, name: "gorra", size: "-", colour: "negro", price: 500, image: "img/black-cup.jpg"},
-//                  {id: 13, name: "pollera", size: "XXS", colour: "negro", price: 1500, image: "img/black-skirt.jpg"},
-//                  {id: 14, name: "cartera", size: "-", colour: "rosa claro", price: 2500, image: "img/pink-bag.jpg"},
-//                  {id: 15, name: "buzo corto", size: "L", colour: "rosa, blanco y negro", price: 1600, image: "img/crop-top.jpg"},
-//                  {id: 16, name: "pantalon jean", size: "S", colour: "azul", price: 1800, image: "img/jeans.jpg"},
-//                  {id: 17, name: "buzo", size: "XXL", colour: "turquesa", price: 1000, image: "img/buzo.jpg"},
-//                  {id: 18, name: "vestido", size: "XL", colour: "azul con lunares", price: 1400, image: "img/blue-dress.jpg"},
-//                  {id: 19, name: "monoprenda", size: "M", colour: "camel", price: 1700, image: "img/mono.jpg"},
-//                  {id: 20, name: "pollera", size: "S", colour: "naranja", price: 1200, image: "img/orange-skirt.jpg"},]
 
 //Carrito!!
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -74,29 +56,23 @@ const updateCart = (cart) => {
     cartContainer.appendChild(div);
 }
 
+// FUNCION FILTRO POR TALLE
 const inputFiltrar = document.querySelector("#filtroProducto")
 
-// FUNCION FILTRO POR TALLE
 function filtrarClothes() {
     inputFiltrar.value = inputFiltrar.value.trim().toUpperCase()
-    debugger
-   if (inputFiltrar.value !== "") {
+    if (inputFiltrar.value !==" ") {
         const resultado = Clothes.filter(Clothes => Clothes.size.includes(inputFiltrar.value))
-    if (inputFiltrar.value !== "") {
-        const resultado = Clothes.filter(Clothes => Clothes.size.includes(inputFiltrar.value))
-        if (resultado.length === 0) {
-            swal("No hay prendas del talle que buscas 😞", "Pero puedes agregar productos que tengas para vender 😁");
+        if (resultado.length == 0) {
+            swal("No hay prendas del talle que buscas 😞", "Intenta en otro momento");
 
-            // alert("No hay prendas del talle que buscas")
             loadClothes(Clothes)
         } else {
             loadClothes(resultado)
         }
-    } else {
-        loadClothes(Clothes)
-    }
 }
 }
+
 inputFiltrar.addEventListener("input", filtrarClothes)
 
 function eventoEnBotones() {
@@ -107,7 +83,6 @@ function eventoEnBotones() {
 }
 
 // Tarjetas
-
 const loadEvents = () => {
     let buttons = document.querySelectorAll('.button');
     for (const button of buttons) {
@@ -138,31 +113,6 @@ const loadEvents = () => {
         })
     }
 }
-
-
-// AGREGAR PRENDA PARA VENDER- preguntas para agregar prenda
-
-function agregarprenda() {
-
-    let idnuevo = (Clothes.length + 1);
-    let confimacion = confirm("¿Desea agregar una nueva prenda para vender?")
-    if (confimacion){
-        let nombrenuevaprenda = (prompt("ingrese una prenda nueva"));
-                 
-        let tallenuevo = (prompt("ingrese el talle en letras, ej: S, M, L"));
-        let colornuevo = (prompt("ingrese el color de la prenda"));
-        let precionuevo = Number(prompt("ingrese el precio"));
-        let image = "img/non-available.jpg"
-        let newprenda = new Prenda(idnuevo, nombrenuevaprenda, tallenuevo, colornuevo, precionuevo, image)
-        console.log(newprenda)
-        Clothes.push(newprenda)
-        console.log(Clothes)
-        }
-    
-    loadClothes(Clothes)
-}
-
-
 // CARDS DE LAS PRENDAS
 const loadClothes = (Clothes) => {
     let container = document.querySelector('#container');
@@ -184,15 +134,30 @@ const loadClothes = (Clothes) => {
     loadEvents();
 }
 
-
-document.addEventListener("DOMContentLoaded", loadClothes(Clothes));
-
 const botonagregar = document.querySelector("#agregarprenda");
 
-botonagregar.addEventListener("click", () => {
-    agregarprenda()
-    localStorage.setItem("cart", JSON.stringify(cart))
-})
+botonagregar.addEventListener("click", (e) => {
+    debugger
+    swal({
+        title: "¿Deseas agregar una prenda?",
+        text: "Deberás ingresar con tu usuario para poder hacerlo!",
+        icon: "info",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((isConfirm) => {
+        if (isConfirm) {
+            swal("😁 Que bueno!", "Ingresa con tu usuario para continuar", "success");
+            agregarPrenda();
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+        else {
+            swal("😞 Que lastima!", "Sigue navegando nuestro sitio!", "error");
+            e.preventDefault();
+            }
+        });
+    });
+
 function recuperarCarrito() {
     if (localStorage.getItem("cart")) {
         cart = JSON.parse(localStorage.getItem("cart"))
@@ -202,7 +167,6 @@ function recuperarCarrito() {
 recuperarCarrito()
 
 // eliminar del carrito de a una prenda
-
 const eliminarDelCarrito = (clothesid) => {
     const item = cart.find((clothes) => clothes.id === clothesid)
     const indice = cart.indexOf(item)
@@ -223,4 +187,67 @@ function pagar() {
         showConfirmButton: false,
         timer: 4000,
       });
+      cart = [];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCart(cart);
+}
+
+//------Cargar Productos ----//
+const form_login_user = document.querySelector("#login_user");
+const form_formuilario_addproduct = document.querySelector("#formuilario_addproduct");
+
+function login(){
+    const user_name = document.querySelector("#user_name").value;
+    const user_password = document.querySelector("#user_pass").value;
+    if (user_name == "user1" & user_password == "user1"){
+        swal({
+            icon: 'success',
+            title: "Bienvenido " + user_name,
+            text: "Ya podes agregar tus prendas 😁",
+            button: "Ok!",
+          });
+          form_login_user.className ="ocultar"
+          form_formuilario_addproduct.className = " ";
+
+    }
+    else{
+        swal({
+            title: "🤔 Algo anda mal!",
+            text: "Has ingresado un Usuario o contraseña incorrecto",
+            icon: "warning",
+            button: "Intentalo de nuevo!",
+          });
+    }
+
+};
+
+// AGREGAR PRENDA PARA VENDER
+function agregarPrenda() {
+        form_login_user.className =" ";
+      }
+
+
+function cargarProd(){
+    let idnuevo = (Clothes.length + 1);
+    let nombrenuevaprenda = document.querySelector("#prenda").value;  
+    let tallenuevo = document.querySelector("#talle").value;
+    let colornuevo = document.querySelector("#color").value;
+    let precionuevo = document.querySelector("#precio").value;
+    let image = "img/non-available.jpg"
+    
+    let newprenda = new Prenda(idnuevo, nombrenuevaprenda, tallenuevo, colornuevo, precionuevo, image,1)
+        console.log(newprenda)
+        Clothes_agregadas.push(newprenda);
+        console.table(Clothes);
+        swal({
+            icon: 'success',
+            title: "Increible!!! 🙌",
+            text: "Haz cargado el siguiente producto:" + " " + nombrenuevaprenda + " " + colornuevo,
+            button: "Continuar",
+          });
+    
+
+    localStorage.setItem("Clothes_agregadas", JSON.stringify(Clothes_agregadas));
+    Clothes = [...Clothes_iniciales, ...Clothes_agregadas];
+    loadClothes(Clothes);
 }

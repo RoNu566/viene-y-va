@@ -12,14 +12,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Permanent+Marker&family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Permanent+Marker&family=Raleway&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script defer src="./js/main.js"></script>
 </head>
 
 <body class="body">
     <header>
-        <h1>Viene y va</h1>
+        <nav class="navbar bg-light">
+            <form class="container-fluid justify-content-end">
+                <h1>¡Bienvenidos a Viene y Va!</h1>
+
+                <div id="Contacto_btn">
+                    <button class="btn btn-dark" type="button" id="contacto">
+                        <a target="_blank" href=".//pages/contacto.html">Contactanos</a>
+                    </button>
+                </div>
+            </form>
+          </nav>
+        <h2>Viene y va</h2>
         <h2>Compra y Venta de Ropa Usada</h2>
     </header>
     <main class="container" id="main">
@@ -33,11 +45,11 @@
         <div>
             <label for="talle">¿Que talle estas buscando?</label><br>
             <span><input type="search" id="filtroProducto" style="width:15rem;" placeholder="Ingresa el talle"></span>
-        </div>      
+        </div>
         <section id="container">
-                <div>
-                    <button class="card-button">AGREGAR</button>
-                </div>
+            <div>
+                <button class="card-button">AGREGAR</button>
+            </div>
             </div>
         </section>
         <section id="cart">
@@ -46,11 +58,65 @@
         <div class="d-grid gap-2">
             <button class="btn btn-dark" type="button" id="agregarprenda">¿Queres agregar una prenda para
                 vender? 😊</button>
-          </div>
-        <div>
-            <button class="btn btn-dark" type="button" id="contacto">
-                <a target="_blank" href=".//pages/contacto.html">Contactanos ✍️</a>
-            </button>
+        </div>
+        <div id="login_user" class="ocultar">
+            <label for="user_name">Usuario:</label>
+            <input type="text" id="user_name" value="user1" placeholder="Ingrese su usuario">
+            <label for="user_password">Contraseña:</label>
+            <input type="text" id="user_pass" value="user1" placeholder="Ingrese contraseña">
+            <button id="login_btn" class="btn btn-dark" onclick="login()">Ingresar</button>
+        </div>
+        
+        <div id="formuilario_addproduct" class="ocultar">
+            <h2 class="ingresoPrenda">Completa los datos solicitados</h2>
+            <label for="Tipo de prenda">Selecciona el tipo de prenda</label>
+            <select  id="prenda">
+                <option value="Remera"> Remera </option>
+                <option value="Pantalon"> Pantalon </option>
+                <option value="Vestido"> Vestido</option>
+                <option value="Campera"> Campera</option>
+                <option value="Saco"> Saco </option>
+                <option value="Buzo"> Buzo</option>
+                <option value="Gorro"> Gorro</option>
+                <option value="Calza"> Calza</option>
+                <option value="Pollera"> Pollera</option>
+                <option value="Tapado"> Tapado</option>
+                <option value="Cartera/Bolso"> Cartera/Bolso</option>
+                <option value="Accesorio"> Accesorio</option>
+                <option value="Monoprenda"> Monoprenda</option>
+
+            </select>
+            <label for="talle">Selecciona el talle</label>
+            <select id="talle">
+                <option value="XS"> XS</option>
+                <option value="S"> S</option>
+                <option value="M"> M</option>
+                <option value="L"> L</option>
+                <option value="XL"> XL </option>
+                <option value="XXL"> XXL</option>
+                <option value="XXXL7"> XXXL</option>
+            </select>
+            <label for="color">Selecciona el color</label>
+            <select id="color">
+                <option value="Rojo"> Rojo</option>
+                <option value="Amarillo"> Amarillo</option>
+                <option value="Azul"> Azul</option>
+                <option value="Verde"> Verde</option>
+                <option value="Naranja"> Naranja </option>
+                <option value="Negro"> Negro</option>
+                <option value="Blanco"> Blanco</option>
+                <option value="Violeta"> Violeta</option>
+                <option value="Lila"> Lila</option>
+                <option value="Celeste"> Celeste</option>
+                <option value="Rosado"> Rosado</option>
+                <option value="Bordo"> Bordo</option>
+                <option value="Marron"> Marron</option>
+                <option value="Beige"> Beige</option>
+                <option value="Multicolor"> Multicolor</option>
+            </select>
+            <label for="precio">Ingresa el precio final a la venta:</label>
+            <input type="number" id="precio" value="800">
+            <button id="cargar_btn" class="btn btn-dark" onclick="cargarProd()">Cargar Producto</button>
         </div>
     </main>
     <footer id="footer">
